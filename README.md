@@ -14,25 +14,30 @@ var Logger *slog.Logger
 ## Step 2:
 Create and open log-file:
 ```go
-...
 func LogInit() {
     file, err := os.OpenFile("log.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-    if err != nil { panic(err) }
+    if err != nil { 
+        panic(err) 
+    }
 ...
 ```
 
 ## Step 3:
-Create handler logs and logger with this handler:
+Create handler logs, set handler options and logger with this handler and options:
 ```go
 ...
-    handler := slog.NewTextHandler(file, nil)
+	opts := &slog.HandlerOptions{
+		AddSource: true,
+		Level:     slog.LevelDebug,
+	}
+    handler := slog.NewTextHandler(file, opts)
     Logger := slog.New(handler)
 }
-...
 ```
 
 ## Step 4:
 Import created logger in other package, initinitialize and set for default logger in slog:
+
 Import:
 ```go
 import (

@@ -8,11 +8,15 @@ import (
 var Logger *slog.Logger
 
 func LogInit() {
-	file, err := os.OpenFile("log.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile("log.json", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		panic(err)
 	}
 
-	Logger = slog.New(slog.NewTextHandler(file, nil))
+	opts := &slog.HandlerOptions{
+		AddSource: true,
+		Level:     slog.LevelDebug,
+	}
+	Logger = slog.New(slog.NewJSONHandler(file, opts))
 	Logger.Info("Logger start")
 }
