@@ -30,6 +30,7 @@ Create handler logs, set handler options and logger with this handler and option
 		AddSource: true,
 		Level:     slog.LevelDebug,
 	}
+    
     handler := slog.NewTextHandler(file, opts)
     Logger := slog.New(handler)
 }

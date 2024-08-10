@@ -25,6 +25,11 @@ func main() {
 }
 
 func handlerMain(w http.ResponseWriter, r *http.Request) {
+	slog.Info("Handled request",
+		slog.Group("Request Info",
+			slog.String("Method", r.Method),
+			slog.String("Path", r.URL.Path),
+		),
+	)
 	fmt.Fprintf(w, "Hello, World!")
-	slog.Info(fmt.Sprintf(r.RemoteAddr))
 }
