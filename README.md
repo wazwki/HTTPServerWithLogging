@@ -26,11 +26,10 @@ func LogInit() {
 Create handler logs, set handler options and logger with this handler and options:
 ```go
 ...
-	opts := &slog.HandlerOptions{
-		AddSource: true,
-		Level:     slog.LevelDebug,
-	}
-    
+    opts := &slog.HandlerOptions{
+	AddSource: true,
+	Level:     slog.LevelDebug,
+    }
     handler := slog.NewTextHandler(file, opts)
     Logger := slog.New(handler)
 }
