@@ -1,44 +1,42 @@
-# How to config logging in golang application with log/slog
+# **How to Set Up `log/slog` in a Golang HTTP Server**
 
-## Step 1:
-Import log/slog in your logging config file and create global variable for logger object:
+# 1. Import `log/slog` in the logging configuration file and create a global variable for the logger object:
+
 ```go
 import (
-    log/slog
+    "log/slog"
 )
 
 var Logger *slog.Logger
-
 ```
 
-## Step 2:
-Create and open log-file:
+# 2. Create and open a log file:
+
 ```go
 func LogInit() {
     file, err := os.OpenFile("log.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-    if err != nil { 
-        panic(err) 
+    if err != nil {
+        panic(err)
     }
-...
+    ...
 ```
 
-## Step 3:
-Create handler logs, set handler options and logger with this handler and options:
+# 3. Set up the handler logs, define handler options, and create a logger with these handler options:
+
 ```go
-...
     opts := &slog.HandlerOptions{
 	AddSource: true,
 	Level:     slog.LevelDebug,
     }
     handler := slog.NewTextHandler(file, opts)
-    Logger := slog.New(handler)
+    Logger = slog.New(handler)
 }
 ```
 
-## Step 4:
-Import created logger in other package, initinitialize and set for default logger in slog:
+# 4. Import the created logger in another package, initialize it, and set it as the default logger in `slog`:
 
-Import:
+## 4.1. Import:
+
 ```go
 import (
 	".../pkg/mylogger"
@@ -46,12 +44,14 @@ import (
 )
 ```
 
-Initinitialize:
+## 4.2. Initialization:
+
 ```go
 mylogger.LogInit()
 ```
 
-Set for default:
+## 4.3. Set as the default logger:
+
 ```go
 slog.SetDefault(mylogger.Logger)
 ```
